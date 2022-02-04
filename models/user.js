@@ -60,5 +60,7 @@ const addAddress = async (id) => {
 };
 
 // When you call the function to add a new address to a user created, we have to pass the id in the database as a param.
+// To find, swap to mongo in terminal, type to use relationshipDemo, then you can call to find users DB and get the id.
 
+addAddress("61faf8f83ea75ec3c61051d1");
 makeUser();
