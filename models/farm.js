@@ -16,14 +16,14 @@ mongoose
   });
 
 // Defining the schema to store the farm products
-// const productSchema = new mongoose.Schema({
-//   name: String,
-//   price: Number,
-//   season: {
-//     type: String,
-//     enum: ["Spring", "Summer", "Fall", "Winter"],
-//   },
-// });
+const productSchema = new mongoose.Schema({
+  name: String,
+  price: Number,
+  season: {
+    type: String,
+    enum: ["Spring", "Summer", "Fall", "Winter"],
+  },
+});
 
 // Now we comment the product schema to create the farm schema(don't need to mongoose.schema cause we've imported from above)
 const farmSchema = new Schema({
@@ -34,10 +34,20 @@ const farmSchema = new Schema({
 });
 
 const product = mongoose.model("Product", productSchema);
+const farm = mongoose.model("Farm", farmSchema);
 
-product.insertMany([
-  { name: "Goddess Melon", price: 4.99, season: "Summer" },
-  { name: "Baby Watermelon", price: 4.99, season: "Summer" },
-  { name: "Asparagus", price: 3.99, season: "Springs" },
-]);
-const 
+// product.insertMany([
+//   { name: "Goddess Melon", price: 4.99, season: "Summer" },
+//   { name: "Baby Watermelon", price: 4.99, season: "Summer" },
+//   { name: "Asparagus", price: 3.99, season: "Springs" },
+// ]);
+
+const makeFarm = async () => {
+  const farm = new farm({ name: "Full Belly Farms", city: "Guinda, CA" });
+  const melon = await product.findOne({ name: "Goddess Melon" });
+  farm.products.push(melon);
+  await farm.save();
+  console.log(farm);
+};
+
+makeFarm();
