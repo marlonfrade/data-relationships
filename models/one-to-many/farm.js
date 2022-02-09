@@ -33,21 +33,45 @@ const farmSchema = new Schema({
   products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
 });
 
-const product = mongoose.model("Product", productSchema);
-const farm = mongoose.model("Farm", farmSchema);
+const Product = mongoose.model("Product", productSchema);
+const Farm = mongoose.model("Farm", farmSchema);
 
-// product.insertMany([
+// Product.insertMany([
 //   { name: "Goddess Melon", price: 4.99, season: "Summer" },
 //   { name: "Baby Watermelon", price: 4.99, season: "Summer" },
-//   { name: "Asparagus", price: 3.99, season: "Springs" },
+//   { name: "Asparagus", price: 3.99, season: "Spring" },
 // ]);
 
 const makeFarm = async () => {
-  const farm = new farm({ name: "Full Belly Farms", city: "Guinda, CA" });
-  const melon = await product.findOne({ name: "Goddess Melon" });
+  const farm = new Farm({ name: "Full Belly Farms", city: "Guinda, CA" });
+  const melon = await Product.findOne({ name: "Goddess Melon" });
   farm.products.push(melon);
   await farm.save();
   console.log(farm);
 };
 
-makeFarm();
+// After we create the function, when run the function on terminal, switch on database Mongo to relationshipDemo and run db.farms.find()
+
+// We execute the function to see if works
+// makeFarm();
+
+const addProduct = async () => {
+  // First we look through the farm schema
+  const farm = await Farm.findOne({ name: "Full Belly Farms" });
+  // After we look up through the product schema to find one
+  const watermelon = await Product.findOne({ name: "Baby Watermelon" });
+  // Now we push all the things we catch to the array
+  farm.products.push(watermelon);
+  await farm.save();
+  console.log(farm);
+};
+
+// Execute the function
+// Verify if the finds are searching correctly
+// addProduct();
+
+// Testing Populate
+Farm.findOne({ name: "Full Belly Farms" })
+  // Executing the mongo command populate
+  .populate("products")
+  .then((farm) => console.log(farm));
