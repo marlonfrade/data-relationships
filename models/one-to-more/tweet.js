@@ -21,7 +21,7 @@ const userSchema = new Schema({
 });
 
 const twwetSchema = new Schema({
-  tweet: String,
+  text: String,
   likes: Number,
   user: { type: Schema.Types.ObjectId, ref: "User" },
 });
@@ -31,4 +31,19 @@ const twwetSchema = new Schema({
 const User = mongoose.model("User", userSchema);
 const Tweet = mongoose.model("Tweet", twwetSchema);
 
-// Now we have the two models, we can create a function to create tweets
+// Now we have the two models, we can create a function to create tweets for example
+// const makeTweets = async () => {
+//   // First we create the information about the user inside the u variable (from user)
+//   // const user = new User({ username: "marlonfrade", age: 24 });
+//   // We create another user to find and add tweets
+//   const user = await User.findOne({ username: "marlonfrade" });
+//   const tweet2 = new Tweet({ text: "Second Text", likes: 200 });
+//   tweet2.user = user;
+//   // then save the new user, and don't need to await this time
+//   user.save();
+//   tweet2.save();
+// };
+
+// makeTweets();
+
+// Now we populate with tweets
