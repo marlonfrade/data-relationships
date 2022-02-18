@@ -31,6 +31,17 @@ const twwetSchema = new Schema({
 const User = mongoose.model("User", userSchema);
 const Tweet = mongoose.model("Tweet", twwetSchema);
 
+// First step
+// const makeTweets = async () => {
+//   const user = new User({ username: "marlonfrade", age: 24 });
+//   const tweet1 = new Tweet({ text: "Hello!", likes: 1500 });
+//   tweet1.user = user;
+//   user.save();
+//   tweet1.save();
+// };
+
+// Second Step
+
 // Now we have the two models, we can create a function to create tweets for example
 // const makeTweets = async () => {
 //   // First we create the information about the user inside the u variable (from user)
@@ -47,3 +58,13 @@ const Tweet = mongoose.model("Tweet", twwetSchema);
 // makeTweets();
 
 // Now we populate with tweets
+const findTweet = async () => {
+  // This is the first example
+  // const t = await Tweet.findOne({}).populate("user");
+  //This is the second example
+  // In this example, we can use the second param of populate to specify only the information content we want
+  const t = await Tweet.findOne({}).populate("user", "username");
+  console.log(t);
+};
+
+findTweet();
